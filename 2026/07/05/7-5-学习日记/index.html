@@ -1,0 +1,244 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>7.5 学习日记 | Jack's Blog</title><meta name="author" content="Jackvideo"><meta name="copyright" content="Jackvideo"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="学习情况今天主要复习了一遍 Kubernetes 的基础知识。 整体先从集群架构开始过了一遍：K8s 集群大体可以分成控制平面和工作节点。控制平面负责管理整个集群的状态，例如通过 kube-apiserver 对外提供 API，通过 etcd 保存集群数据，通过 scheduler 给 Pod 选择合适的节点，再由 controller-manager 不断把实际状态往期望状态靠拢。Worker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="7.5 学习日记">
+<meta property="og:url" content="http://jackvideo.github.io/2026/07/05/7-5-%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Jack&#39;s Blog">
+<meta property="og:description" content="学习情况今天主要复习了一遍 Kubernetes 的基础知识。 整体先从集群架构开始过了一遍：K8s 集群大体可以分成控制平面和工作节点。控制平面负责管理整个集群的状态，例如通过 kube-apiserver 对外提供 API，通过 etcd 保存集群数据，通过 scheduler 给 Pod 选择合适的节点，再由 controller-manager 不断把实际状态往期望状态靠拢。Worker">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://jackvideo.github.io/img/avatar.png">
+<meta property="article:published_time" content="2026-07-05T15:59:00.000Z">
+<meta property="article:modified_time" content="2026-07-05T15:59:00.000Z">
+<meta property="article:author" content="Jackvideo">
+<meta property="article:tag" content="Study Diary">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://jackvideo.github.io/img/avatar.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "7.5 学习日记",
+  "url": "http://jackvideo.github.io/2026/07/05/7-5-%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/",
+  "image": "http://jackvideo.github.io/img/avatar.png",
+  "datePublished": "2026-07-05T15:59:00.000Z",
+  "dateModified": "2026-07-05T15:59:00.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Jackvideo",
+      "url": "http://jackvideo.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://jackvideo.github.io/2026/07/05/7-5-%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.5"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '7.5 学习日记',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">30</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 总览</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Jack's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">7.5 学习日记</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 总览</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">7.5 学习日记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-07-05T15:59:00.000Z" title="发表于 2026-07-05 23:59:00">2026-07-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-07-05T15:59:00.000Z" title="更新于 2026-07-05 23:59:00">2026-07-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">730</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>2分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="学习情况"><a href="#学习情况" class="headerlink" title="学习情况"></a>学习情况</h2><p>今天主要复习了一遍 Kubernetes 的基础知识。</p>
+<p>整体先从集群架构开始过了一遍：K8s 集群大体可以分成控制平面和工作节点。控制平面负责管理整个集群的状态，例如通过 kube-apiserver 对外提供 API，通过 etcd 保存集群数据，通过 scheduler 给 Pod 选择合适的节点，再由 controller-manager 不断把实际状态往期望状态靠拢。Worker 节点则更贴近真正运行应用的地方，主要依靠 kubelet 管理 Pod，依靠 kube-proxy 维护 Service 相关的网络规则，再通过容器运行时真正把容器跑起来。</p>
+<p>之后又复习了 workload 的几种常见类型。Deployment 比较适合无状态应用，核心是管理副本数、滚动更新和回滚；StatefulSet 用来处理有状态应用，更强调稳定的网络标识和持久化存储；DaemonSet 则适合让每个节点都跑一个 Pod，比如日志采集、监控 Agent、网络插件这类组件；Job 和 CronJob 则对应一次性任务和定时任务。</p>
+<p>Service 这块也重新理了一下。Pod 本身是会变化的，IP 也不适合被直接依赖，所以 Service 的意义就是给一组 Pod 提供一个稳定的访问入口。ClusterIP 主要用于集群内部访问，NodePort 会把服务暴露到节点端口上，LoadBalancer 通常配合云厂商负载均衡使用。对于 HTTP&#x2F;HTTPS 流量，还可以继续用 Ingress 做域名、路径转发、TLS 等入口层能力。</p>
+<p>这次复习完感觉 K8s 还是要抓主线：先理解“声明式 API + 控制器不断调谐”的思想，再去看 Pod、Deployment、Service 这些资源对象，就不会只是背概念了。</p>
+<h2 id="下一步学习计划"><a href="#下一步学习计划" class="headerlink" title="下一步学习计划"></a>下一步学习计划</h2><p>下面是 GPT 建议我下一步继续补的 K8s 内容：</p>
+<ol>
+<li>先补 Pod 生命周期相关内容，包括 init container、sidecar、restartPolicy、liveness&#x2F;readiness&#x2F;startup probe。</li>
+<li>继续学习 ConfigMap 和 Secret，搞清楚配置、密钥、环境变量、挂载文件这几种注入方式。</li>
+<li>学习持久化存储：Volume、PersistentVolume、PersistentVolumeClaim、StorageClass。</li>
+<li>学习调度相关内容：nodeSelector、nodeAffinity、taints、tolerations。</li>
+<li>学习资源限制：requests、limits、ResourceQuota、LimitRange。</li>
+<li>学习 K8s 网络：Service、Ingress、DNS、NetworkPolicy，可以顺便了解一下 CNI。</li>
+<li>最后开始做实操，把一个简单后端服务打包成镜像，写 Deployment、Service、Ingress，再完整部署到本地集群里。</li>
+</ol>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>视频里的 Chad 好有意思，又温柔又有技术热情的技术宅大佬 hhhhh。看这种人讲技术其实挺舒服的，不只是把概念念一遍，而是真的能感觉到他对这些工程系统本身有热情。希望自己之后学 K8s 也能慢慢从“背组件名”过渡到“理解为什么这样设计”。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1YQVJ6jERF/?spm_id_from=333.337.search-card.all.click&vd_source=9ba03e26217bb8f579a12ea5e63daf99">Kubernetes 教程视频</a></li>
+<li><a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/overview/components/">Kubernetes Components</a></li>
+<li><a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/workloads/">Kubernetes Workloads</a></li>
+<li><a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/services-networking/service/">Kubernetes Service</a></li>
+<li><a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/services-networking/ingress/">Kubernetes Ingress</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://jackvideo.github.io">Jackvideo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://jackvideo.github.io/2026/07/05/7-5-%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/">http://jackvideo.github.io/2026/07/05/7-5-%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://jackvideo.github.io" target="_blank">Jack's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Study-Diary/">Study Diary</a></div><div class="post-share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/07/08/7-8-%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/" title="7.8 学习日记"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">7.8 学习日记</div></div><div class="info-2"><div class="info-item-1">学习情况今天主要刷了几道力扣题：  76. 最小覆盖子串 189. 轮转数组 539. 最小时间差  这几题做下来，主要学习和巩固了双指针、滑动窗口的思路。 滑动窗口的核心过程可以简单概括成： 1入 -&gt; 计算答案 -&gt; 出  先让右指针不断向前，把元素加入窗口；当窗口满足条件后，再尝试移动左指针收缩窗口，并在这个过程中及时更新答案。这样就不用暴力枚举所有区间，而是在窗口移动中维护当前状态，整体思路清晰很多。 其他滑动窗口这类题还是要多练，尤其是窗口什么时候扩、什么时候缩、什么时候更新答案，这几个时机很关键。今天先把这个套路记住：入、计算答案、出。 </div></div></div></a><a class="pagination-related" href="/2025/03/17/%E6%8F%90%E5%89%8D%E5%AE%9E%E4%B9%A0%E7%AC%AC%E4%B8%80%E5%A4%A9/" title="提前实习第一天"><img class="cover" src="https://tse2-mm.cn.bing.net/th/id/OIP-C.g_OIpfyz-cYOcDvLBC7S6AHaE5?w=281&amp;h=186&amp;c=7&amp;r=0&amp;o=5&amp;dpr=1.3&amp;pid=1.7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">提前实习第一天</div></div><div class="info-2"><div class="info-item-1">序在日本之旅与西安之旅结束后，个人内心的“罪恶感”使我在玩到满足之后便很期盼上班，所谓欲有为也。于是在家里过了个不摆的超长寒假后，我还是决定趁早返回学校，解决srp的结题事项后，带着断断续续接近结束的毕设前往深圳提前实🐂习🐎。 友此番令我感悟最深的，便是与朋友之羁绊。在这段时间迷上三国演义老版电视剧的我，被多年以前朴素却真实的情感和情节所打动：桃园三结义、奉孝之死、曹操一炮害三贤（不是哥们）、赵子龙七进七出等名场面，令我深深感受到古人对忠义的重视刻骨铭心，对贤士知己的敬爱溢于言表。而刚刚落地深圳的我，也得好友哥弟相助陪伴，令我不禁感慨与哥弟结识之幸运！以后定加倍珍惜😭😭😭 房租下房子已有两晚三日，提起来仍觉得幸运。由于这次找的中介已经帮我带过一次了，我也是对他比较的放心，但没想到谈了一个20平多一点点，坐北朝南落地窗房。且租金比前任租了五年的租客便宜400，更谈去了0.5元的电费，房东人也不错，山东人直性子，总之主打一个满意！！不过看到同事那个3400的房子，emmm之后有机会真得挑个稍微奢侈点的哈哈哈。 工第一天上班，与几位前辈打招呼时对我态度都很友善，也让自己稍许欣...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2024/03/16/Study-Diary-3-16/" title="Study Diary 3.16"><img class="cover" src="https://pic.imgdb.cn/item/65e59f439f345e8d033461cf.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-16</div><div class="info-item-2">Study Diary 3.16</div></div><div class="info-2"><div class="info-item-1">学习日记DAY 11学习情况早上看了几篇part2&amp;3，逐开摆， 今日算法题：①73. 矩阵置零:给定一个 m x n 的矩阵，如果一个元素为 0 ，则将其所在行和列的所有元素都设为 0 。 1234567891011121314151617181920212223242526class Solution &#123;    public void setZeroes(int[][] matrix) &#123;        //二次扫描，使用两个标记数组    int n=matrix.length;    int m=matrix[0].length;    boolean[] row=new boolean[n];    boolean[] column=new boolean[m];    for(int i=0;i&lt;n;i++)&#123;        for(int j=0;j&lt;m;j++)&#123;            //第一次，标记上哪行哪列含有0            if(matrix[i][j]==0)&#123;       ...</div></div></div></a><a class="pagination-related" href="/2024/03/14/Study-Diary-3-13-3-14/" title="Study Diary 3.13&amp;3.14"><img class="cover" src="https://pic.imgdb.cn/item/65e59f439f345e8d033461cf.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-14</div><div class="info-item-2">Study Diary 3.13&amp;3.14</div></div><div class="info-2"><div class="info-item-1">学习日记DAY 9&amp;10学习情况3.13:打算暂时不看八股，专心学英语了，早上看了点作文？然后和 同学吃饭去了，吃完饭又去k，k完又吃……然后就晚上了，好像又学了一会会儿，然后打游戏了吧 3.14：突然意识到雅思只剩两周，真得好好学了，不过问题不大，早上怒看大作文和练口语，感觉口语好了很多中午写了一些高频算法题，codeTop seems very useful晚上赶时间写了一篇大作文，26mins in total, 5mins to 构思写下本复盘，明天加油！ 心情经历了二面，心情无比舒畅：） 代抢没白叫，抢到陶喆了！！！！老大我来了5555厦门场和佛山首场的失利让我不得不向这个市场妥协，唉……但好歹比黄牛票便宜，4月份爽看！！！每天许愿进三&#x2F;hr面  ￣﹃￣ </div></div></div></a><a class="pagination-related" href="/2024/04/16/Study-Diary-4-16/" title="Study-Diary-4-16"><img class="cover" src="https://pic.imgdb.cn/item/65f069e99f345e8d03bb2f2d.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-16</div><div class="info-item-2">Study-Diary-4-16</div></div><div class="info-2"><div class="info-item-1">学习情况自从面完HR面，开始了Python的学习，然后温习了Linux基础命令，看了看docker基本操作值得一提的是用Python做了一个小游戏（以撒的结合：战争之王），也是类似飞机大战的游戏，但是自己搞了以撒相关的贴图和音效啥的，不过因为不想用太简单的库做太深入的工作，所以做完HP显示就戛然而止了https://github.com/Jackvideo/The-Binding-of-Isaac-The-King-of-War 暂时敲定SRE运维入门学习路线：Shell编程—Linux基础—Python基础—Django框架—容器化技术—日志监控等—Saas平台开发（蓝鲸！） 所以最近回过头来先学好shell编程基础哈哈哈 其他今天下载了Replay，用来AI Cover voices，感觉有点好玩的。同时我不禁思考，如何去成为一个AIGC up主，持续地产出和运营……可能得看点小红书帖子？？？（idk） </div></div></div></a><a class="pagination-related" href="/2024/03/04/Study-Diary-3-04/" title="Study Diary 3.04"><img class="cover" src="https://pic.imgdb.cn/item/65e59f439f345e8d033461cf.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-04</div><div class="info-item-2">Study Diary 3.04</div></div><div class="info-2"><div class="info-item-1">学习日记DAY 1开新坑！由于没有太有感触的事情，或者有时候涉及较多隐私，我的博客已经荒废了很久。。。 但是舍友告诉我：你可以先堆数量再提质量！OK！那么从今天开始我将记录每天的学习历程和感悟吧 寒假期间回家后，因为很早前就发现自己并不喜欢科研，也不适合咱这儿的研究生，多方考量下，决定直接工作吧，但是在父母支持下，对留学也有了一定想法。于是开始准备雅思……但同时为了找实习，我也继续准备八股和算法（上学期末开始了解 于是过年前每天基本就是“雅思听力+阅读”——八股+算法 想着过年我肯定要无忧无虑放松一下的，于是年前倒学得蛮认真 每日一篇雅思的节奏试水之后，雅听力大概在6.5-7.5的水平，阅读大概稳定在7-7.5，便打算在之后重新训练，先了解一下口语和作文的考察！ 在这期间，我也终于放下多年的芥蒂，买了一个平板，开启了无纸化学习生涯 八股刷得倒有点慢，可能只囫囵吞枣地看了一遍java相关吧！ 于是就到过年了，开心地享受天伦之乐，并带着生病后的老妈久违地出门旅游，也算小小地孝顺了一下，然后就调整心态准备开学了。 开学一周我是充满野心的那派年轻人，于是到了学校之后，空前的内驱力使我马不...</div></div></div></a><a class="pagination-related" href="/2025/01/18/%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B01-18/" title="开发学习日记1.18"><img class="cover" src="https://pic1.imgdb.cn/item/678b5b11d0e0a243d4f56929.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-01-18</div><div class="info-item-2">开发学习日记1.18</div></div><div class="info-2"><div class="info-item-1">新年快乐！  一转眼便2025年了，在默默摸鱼和浅学的日子里，找一天闲下心来做一下阶段性总结 专业 转正成功，虽为白菜，但已满足。 Golang 入门，学会了Gin+Gorm的基本使用，但其实只是靠着代码补全敲了一些基本应用场景，Golang和Python一起还要温习语言基础。 Unity 新坑，下载了UnityHub找了个教程，希望自己至少学会开发基本流程，为之后更多的转岗可能性打好基础哈哈哈。 毕设是以Dubbo微服务框架为基础，前后端分离（Gin+Gorm—Vue3）的音乐交易平台，目前后端做的差不多了，先看心情把前端改好。但是学校的项目还是太个人、随意化，希望以后做工程的时候要做好工期规划，软件分析等。 srp接了个新活，用遗传算法跑一下测试，好好搞吧，能蹭篇论文还可以熟悉python。   生活 唱歌没有太大的突破，或许得找个老师继续请教了，但是也得多练声，基本闭合能力要有 回家后没有健身房去了，保持锻炼吧，现在又觉得自己不够大了哈哈哈哈哈（之前还说不想练太大），在家练要注意动作质量，比如胸中缝需要做到大臂水平闭收。 日本之旅十分开心，也的的确确地长了见识，扩充了眼界。...</div></div></div></a><a class="pagination-related" href="/2024/03/17/Study-Diary-3-17/" title="Study Diary 3.17"><img class="cover" src="https://pic.imgdb.cn/item/65e59f439f345e8d033461cf.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-17</div><div class="info-item-2">Study Diary 3.17</div></div><div class="info-2"><div class="info-item-1">学习日记DAY 12学习情况早上看了几篇part2&amp;3，下午回顾了几道链表的入门题，有点记得住了晚上和外教SchurFroggy AKA Andy Zhu 练习两次完整的口语深刻意识到自己①讲的太少②断断续续考试在即，重点问题须立马解决！！ 心情夜晚易醒，判断为肝火旺 tired，man。。龙珠连招愈发熟练（ </div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Jackvideo</div><div class="author-info-description">Give your life a warm hug</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">30</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://space.bilibili.com/3288519"><i class="fab fa-bilibili"></i><span>订阅我</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Jackvideo" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="https://space.bilibili.com/3288519" target="_blank" title="Bilibili"><i class="fab fa-bilibili" style="color: #FF99FF;"></i></a><a class="social-icon" href="https://music.163.com/#/artist?id=32784641" target="_blank" title="网易云音乐"><i class="fab fa-spotify" style="color: #9b201c;"></i></a><a class="social-icon" href="mailto:13226110808@163.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E6%83%85%E5%86%B5"><span class="toc-number">1.</span> <span class="toc-text">学习情况</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E4%B8%80%E6%AD%A5%E5%AD%A6%E4%B9%A0%E8%AE%A1%E5%88%92"><span class="toc-number">2.</span> <span class="toc-text">下一步学习计划</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-number">3.</span> <span class="toc-text">其他</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">4.</span> <span class="toc-text">参考资料</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/08/7-8-%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/" title="7.8 学习日记">7.8 学习日记</a><time datetime="2026-07-08T15:59:00.000Z" title="发表于 2026-07-08 23:59:00">2026-07-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/05/7-5-%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/" title="7.5 学习日记">7.5 学习日记</a><time datetime="2026-07-05T15:59:00.000Z" title="发表于 2026-07-05 23:59:00">2026-07-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/03/17/%E6%8F%90%E5%89%8D%E5%AE%9E%E4%B9%A0%E7%AC%AC%E4%B8%80%E5%A4%A9/" title="提前实习第一天"><img src="https://tse2-mm.cn.bing.net/th/id/OIP-C.g_OIpfyz-cYOcDvLBC7S6AHaE5?w=281&amp;h=186&amp;c=7&amp;r=0&amp;o=5&amp;dpr=1.3&amp;pid=1.7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="提前实习第一天"/></a><div class="content"><a class="title" href="/2025/03/17/%E6%8F%90%E5%89%8D%E5%AE%9E%E4%B9%A0%E7%AC%AC%E4%B8%80%E5%A4%A9/" title="提前实习第一天">提前实习第一天</a><time datetime="2025-03-17T14:22:30.000Z" title="发表于 2025-03-17 22:22:30">2025-03-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/01/18/AI%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%AC%94%E8%AE%B0/" title="AI人工智能基础知识笔记"><img src="https://pic1.imgdb.cn/item/678b5b10d0e0a243d4f56928.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI人工智能基础知识笔记"/></a><div class="content"><a class="title" href="/2025/01/18/AI%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%AC%94%E8%AE%B0/" title="AI人工智能基础知识笔记">AI人工智能基础知识笔记</a><time datetime="2025-01-18T07:20:36.000Z" title="发表于 2025-01-18 15:20:36">2025-01-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/01/18/%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B01-18/" title="开发学习日记1.18"><img src="https://pic1.imgdb.cn/item/678b5b11d0e0a243d4f56929.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="开发学习日记1.18"/></a><div class="content"><a class="title" href="/2025/01/18/%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B01-18/" title="开发学习日记1.18">开发学习日记1.18</a><time datetime="2025-01-18T07:07:30.000Z" title="发表于 2025-01-18 15:07:30">2025-01-18</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2020 - 2026 By Jackvideo</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.5"></script><script src="/js/main.js?v=5.5.5"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: '',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(res => {
+      countELement.textContent = res[0].count
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  const init = (el = document, path = location.pathname) => {
+    twikoo.init({
+      el: el.querySelector('#twikoo-wrap'),
+      envId: '',
+      region: '',
+      onCommentLoaded: () => {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      },
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    
+
+    isShuoshuo && (window.shuoshuoComment.destroyTwikoo = () => {
+      if (el.children.length) {
+        el.innerHTML = ''
+        el.classList.add('no-comment')
+      }
+    })
+  }
+
+  const loadTwikoo = (el, path) => {
+    if (typeof twikoo === 'object') setTimeout(() => init(el, path), 0)
+    else btf.getScript('https://cdn.jsdelivr.net/npm/twikoo@1.7.11/dist/twikoo.all.min.js').then(() => init(el, path))
+  }
+
+  if (isShuoshuo) {
+    'Twikoo' === 'Twikoo'
+      ? window.shuoshuoComment = { loadComment: loadTwikoo }
+      : window.loadOtherComment = loadTwikoo
+    return
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = loadTwikoo
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

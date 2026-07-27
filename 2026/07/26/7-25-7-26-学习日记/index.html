@@ -1,0 +1,365 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>7.25-7.26 学习日记 | Jack's Blog</title><meta name="author" content="Jackvideo"><meta name="copyright" content="Jackvideo"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="学习情况这两天主要在系统学习企业级 Agent &#x2F; AI 应用中的 RAG 架构与检索链路。 之前对 RAG 的理解还比较停留在“向量库 + 大模型问答”这个层面，但这次顺着架构分层、Chunk、Embedding、Vector Search、Hybrid Search 一路梳理下来，感觉已经逐渐形成了一条比较完整的学习主线。 RAG 不是简单的向量库问答这次首先重新明确了 RAG 系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="7.25-7.26 学习日记">
+<meta property="og:url" content="http://jackvideo.github.io/2026/07/26/7-25-7-26-%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Jack&#39;s Blog">
+<meta property="og:description" content="学习情况这两天主要在系统学习企业级 Agent &#x2F; AI 应用中的 RAG 架构与检索链路。 之前对 RAG 的理解还比较停留在“向量库 + 大模型问答”这个层面，但这次顺着架构分层、Chunk、Embedding、Vector Search、Hybrid Search 一路梳理下来，感觉已经逐渐形成了一条比较完整的学习主线。 RAG 不是简单的向量库问答这次首先重新明确了 RAG 系统">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://jackvideo.github.io/img/avatar.png">
+<meta property="article:published_time" content="2026-07-26T15:59:00.000Z">
+<meta property="article:modified_time" content="2026-07-26T15:59:00.000Z">
+<meta property="article:author" content="Jackvideo">
+<meta property="article:tag" content="Study Diary">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://jackvideo.github.io/img/avatar.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "7.25-7.26 学习日记",
+  "url": "http://jackvideo.github.io/2026/07/26/7-25-7-26-%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/",
+  "image": "http://jackvideo.github.io/img/avatar.png",
+  "datePublished": "2026-07-26T15:59:00.000Z",
+  "dateModified": "2026-07-26T15:59:00.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Jackvideo",
+      "url": "http://jackvideo.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://jackvideo.github.io/2026/07/26/7-25-7-26-%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.5"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '7.25-7.26 学习日记',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 总览</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Jack's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">7.25-7.26 学习日记</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 总览</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">7.25-7.26 学习日记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-07-26T15:59:00.000Z" title="发表于 2026-07-26 23:59:00">2026-07-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-07-26T15:59:00.000Z" title="更新于 2026-07-26 23:59:00">2026-07-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">1.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="学习情况"><a href="#学习情况" class="headerlink" title="学习情况"></a>学习情况</h2><p>这两天主要在系统学习企业级 Agent &#x2F; AI 应用中的 RAG 架构与检索链路。</p>
+<p>之前对 RAG 的理解还比较停留在“向量库 + 大模型问答”这个层面，但这次顺着架构分层、Chunk、Embedding、Vector Search、Hybrid Search 一路梳理下来，感觉已经逐渐形成了一条比较完整的学习主线。</p>
+<h2 id="RAG-不是简单的向量库问答"><a href="#RAG-不是简单的向量库问答" class="headerlink" title="RAG 不是简单的向量库问答"></a>RAG 不是简单的向量库问答</h2><p>这次首先重新明确了 RAG 系统的定位。</p>
+<p>RAG 并不是简单地把文档丢进向量库，然后让大模型问答。更准确地说，它是一套围绕外部知识获取、索引、检索、排序、上下文构建和可信生成的完整工程系统。</p>
+<p>从 Agent 开发视角来看，RAG 更应该被设计成一个可调用的 <code>Knowledge Tool</code>。也就是说，Agent 在执行任务时先判断是否需要外部知识，如果需要，再调用 RAG 工具获取结构化证据，而不是每次都无脑检索。</p>
+<p>这样一来，RAG 就不只是“补知识”的模块，而是 Agent 系统里负责知识访问、证据组织和可信回答的重要能力。</p>
+<h2 id="企业级-RAG-的架构分层"><a href="#企业级-RAG-的架构分层" class="headerlink" title="企业级 RAG 的架构分层"></a>企业级 RAG 的架构分层</h2><p>在架构上，我把 RAG 系统拆成了几个层次来理解：</p>
+<table>
+<thead>
+<tr>
+<th>层次</th>
+<th>主要职责</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>知识接入层</td>
+<td>文档解析、清洗、切片、元数据提取</td>
+</tr>
+<tr>
+<td>索引构建层</td>
+<td>向量索引、关键词索引、摘要索引</td>
+</tr>
+<tr>
+<td>知识存储层</td>
+<td>向量库、关键词索引库、元数据、原文对象存储</td>
+</tr>
+<tr>
+<td>检索运行层</td>
+<td>查询理解、混合检索、过滤、重排序、上下文构建、引用溯源</td>
+</tr>
+<tr>
+<td>生成层</td>
+<td>基于证据回答、依据校验、兜底处理</td>
+</tr>
+<tr>
+<td>Agent 集成层</td>
+<td>把 RAG 封装成 Agent 可调用的工具</td>
+</tr>
+<tr>
+<td>评估与运维层</td>
+<td>效果评估、日志、trace、成本、反馈、权限审计</td>
+</tr>
+</tbody></table>
+<p>这样拆完之后，RAG 的工程复杂度就清楚很多了。它不是一个单点组件，而是一条从“知识进入系统”到“模型生成回答”的完整链路。</p>
+<p>企业级场景尤其要关注权限、版本、溯源和评估。否则即使模型回答看起来很流畅，也可能引用了过期文档、错误版本，甚至未授权内容。</p>
+<h2 id="Chunking：构造可检索的知识单元"><a href="#Chunking：构造可检索的知识单元" class="headerlink" title="Chunking：构造可检索的知识单元"></a>Chunking：构造可检索的知识单元</h2><p>接着重点学习了 Chunk 切分策略。</p>
+<p>Chunking 的目标不是把文本平均切小，而是构造可检索、可追溯、可授权、可用于生成的知识单元。一个企业级 chunk 不应该只是裸文本，而应该包含：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">text</span><br><span class="line">context</span><br><span class="line">metadata</span><br><span class="line">source pointer</span><br></pre></td></tr></table></figure>
+
+<p>也就是说，一个 chunk 既要有正文内容，也要知道自己来自哪里、属于哪个文档、哪个版本、有什么权限要求，以及在生成回答时如何引用回原文。</p>
+<p>常见切分策略包括：</p>
+<table>
+<thead>
+<tr>
+<th>策略</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>固定长度切分</td>
+<td>实现简单，但容易切断语义</td>
+</tr>
+<tr>
+<td>递归结构切分</td>
+<td>按标题、段落、句子、token 逐级降级</td>
+</tr>
+<tr>
+<td>语义切分</td>
+<td>根据相邻文本单元的语义变化切分</td>
+</tr>
+<tr>
+<td>层级切分</td>
+<td>保留章节、段落、小块之间的父子关系</td>
+</tr>
+<tr>
+<td>上下文增强切分</td>
+<td>给小块补充标题、摘要、来源等上下文</td>
+</tr>
+</tbody></table>
+<p>其中我觉得比较重要的是 <code>parent-child chunking</code>。小 chunk 用于精准召回，父 chunk 用于补全上下文。这样既能保证检索足够精确，又不至于让模型拿到一段过碎、缺上下文的内容。</p>
+<h2 id="Embedding-与-Vector-Search"><a href="#Embedding-与-Vector-Search" class="headerlink" title="Embedding 与 Vector Search"></a>Embedding 与 Vector Search</h2><p>Embedding 的本质，是把离散文本映射到连续高维向量空间里，让语义关系可以通过几何距离来计算。</p>
+<p>Embedding 生成的是稠密向量，大多数维度都有非零值；每一维不是人工定义的某个词，而是模型学习出来的分布式语义特征。相比之下，BM25、one-hot、词袋模型这类方法属于稀疏表示，更适合精确词匹配。</p>
+<p>在 RAG 中，通常会用同一个 embedding 模型分别编码文档 chunk 和用户 query：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chunk text -&gt; embedding model -&gt; chunk vector</span><br><span class="line">query text -&gt; embedding model -&gt; query vector</span><br></pre></td></tr></table></figure>
+
+<p>然后通过向量数据库进行最近邻搜索，召回语义上最相近的知识片段。</p>
+<p>从实现角度看，可以分成离线和在线两个阶段：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">离线阶段：</span><br><span class="line">文档 -&gt; 解析/清洗 -&gt; chunk -&gt; embedding -&gt; 写入向量库</span><br><span class="line"></span><br><span class="line">在线阶段：</span><br><span class="line">query -&gt; query embedding -&gt; metadata filter / permission filter -&gt; top-k vector search -&gt; rerank/context</span><br></pre></td></tr></table></figure>
+
+<p>企业级场景里，metadata 非常关键。例如：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">tenant_id</span><br><span class="line">ACL</span><br><span class="line">doc_version</span><br><span class="line">effective_date</span><br><span class="line">status</span><br><span class="line">source_type</span><br></pre></td></tr></table></figure>
+
+<p>这些字段都应该参与过滤，避免错误版本、过期文档或未授权内容进入候选集。否则检索召回再准，也可能在业务上是错的。</p>
+<h2 id="Hybrid-Search：语义召回-精确匹配"><a href="#Hybrid-Search：语义召回-精确匹配" class="headerlink" title="Hybrid Search：语义召回 + 精确匹配"></a>Hybrid Search：语义召回 + 精确匹配</h2><p>最后重点学习了 Hybrid Search。</p>
+<p>Hybrid Search 的核心是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dense vector search + sparse / keyword search + fusion ranking</span><br></pre></td></tr></table></figure>
+
+<p>向量检索擅长语义相似，BM25 擅长编号、术语、日期、金额、代码、人名等精确匹配。企业知识库里经常会有条款编号、错误码、产品型号、函数名、配置项这些强词面信号，所以只用向量检索是不够的。</p>
+<p>比较完整的 Hybrid Search 流程大概是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">query</span><br><span class="line">  -&gt; dense retrieval</span><br><span class="line">  -&gt; sparse retrieval / BM25</span><br><span class="line">  -&gt; candidate merge</span><br><span class="line">  -&gt; RRF or weighted fusion</span><br><span class="line">  -&gt; dedup</span><br><span class="line">  -&gt; permission filter</span><br><span class="line">  -&gt; rerank</span><br><span class="line">  -&gt; context construction</span><br></pre></td></tr></table></figure>
+
+<p>这样做的好处是，语义相近的内容不会被漏掉，精确关键词、编号和术语也能被稳定召回。</p>
+<h2 id="BM25-与-RRF"><a href="#BM25-与-RRF" class="headerlink" title="BM25 与 RRF"></a>BM25 与 RRF</h2><p>BM25 这块主要学习了它的三个核心部分：</p>
+<table>
+<thead>
+<tr>
+<th>部分</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>IDF</td>
+<td>词越稀有，区分度越高，权重越大</td>
+</tr>
+<tr>
+<td>词频饱和</td>
+<td>一个词出现越多越重要，但重要性不会无限线性增长</td>
+</tr>
+<tr>
+<td>文档长度归一化</td>
+<td>避免长文档因为词多而天然占优</td>
+</tr>
+</tbody></table>
+<p>其中 <code>k1</code> 控制词频增长时的饱和速度，<code>b</code> 控制长文档受到长度惩罚的程度。</p>
+<p>BM25 在 RAG 中的价值，是补足向量检索对精确词面信号不敏感的问题。比如用户问某个错误码、接口名、产品型号、合同条款编号时，BM25 往往比纯向量召回更稳。</p>
+<p>多路召回之后，就需要融合排序。这里学习了 RRF，也就是 <code>Reciprocal Rank Fusion</code>。</p>
+<p>RRF 的好处是不用直接比较不同检索器的原始分数，而是根据候选在各路召回结果中的排名来累加分数。可以简单理解为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">某个候选在某一路召回里排名越靠前，贡献越大；</span><br><span class="line">如果它在多路召回里都排名靠前，最终融合分数就会更高。</span><br></pre></td></tr></table></figure>
+
+<p>这很适合 dense search、BM25、graph retrieval 等多路召回结果融合，因为不同检索器的分数尺度可能完全不同，但排名是相对可比较的。</p>
+<h2 id="阶段性总结"><a href="#阶段性总结" class="headerlink" title="阶段性总结"></a>阶段性总结</h2><p>整体来看，这两天已经形成了一套比较完整的 RAG 学习框架：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">RAG 系统分层</span><br><span class="line">  -&gt; Chunking</span><br><span class="line">  -&gt; Embedding</span><br><span class="line">  -&gt; Vector Search</span><br><span class="line">  -&gt; Hybrid Search</span><br><span class="line">  -&gt; BM25</span><br><span class="line">  -&gt; RRF</span><br></pre></td></tr></table></figure>
+
+<p>现在再看企业级 Agent 里的 RAG，就不会只想到“把资料塞进向量库”了。真正难的地方在于：知识怎么进来、怎么切、怎么存、怎么召回、怎么过滤、怎么排序、怎么构造成上下文，以及最后怎么让模型基于证据生成可追溯的答案。</p>
+<p>下一步可以继续学习：</p>
+<ul>
+<li>Rerank</li>
+<li>Context Construction</li>
+<li>Citation</li>
+<li>RAG Evaluation</li>
+<li>Agentic RAG</li>
+<li>Multi-hop Retrieval</li>
+</ul>
+<p>更多笔记会在后续完成后继续发布。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://jackvideo.github.io">Jackvideo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://jackvideo.github.io/2026/07/26/7-25-7-26-%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/">http://jackvideo.github.io/2026/07/26/7-25-7-26-%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://jackvideo.github.io" target="_blank">Jack's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Study-Diary/">Study Diary</a></div><div class="post-share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/07/13/7-13-%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/" title="7.13 学习日记"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">7.13 学习日记</div></div><div class="info-2"><div class="info-item-1">学习情况今天主要练了两道题：三数之和和移动零。 这两题本质上都和双指针有关，但做下来还是能明显感觉到：知道思路是一回事，能把代码稳定写对又是另一回事。好多边界、去重、指针移动的小细节，一不注意代码就跑不起来，或者跑起来但漏解。继续加油吧，算法题还是得多写，不能只停留在“我好像懂了”的程度。 #15 三数之和难度：Medium模式：排序 &#x2F; 双指针 &#x2F; 去重 题目要求在数组 nums 中找到所有不重复的三元组，使得三数之和为 0。 12345678输入：nums = [-1,0,1,2,-1,-4]输出：[[-1,-1,2],[-1,0,1]]输入：nums = []输出：[]输入：nums = [0]输出：[]  核心思路这题的第一步一定是排序。排序之后，双指针才有明确的收缩方向。 外层先固定一个数 nums[i]，然后问题就变成：在 i 右侧找两个数，使它们的和等于 -nums[i]。也就是说，三数之和其实可以理解成“两数之和”的进阶版。 固定 i 之后，令 left = i + 1，right = n - 1，用双指针向中间夹逼：  sum == 0：收录...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2024/09/03/9-3-%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/" title="9.3 学习日记"><img class="cover" src="https://pic.imgdb.cn/item/66d848e1d9c307b7e92d172a.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-03</div><div class="info-item-2">9.3 学习日记</div></div><div class="info-2"><div class="info-item-1">学习情况Spring复习（重要知识点）模块： 最重要的是Spring-core（实现IOC依赖注入）IOC容器实际上就是个Map，存放各种对象 BeanFactory，从名字上也很好理解，生产 bean 的工厂，它负责生产和管理各个 bean 实例。在实际开发中，ApplicationContext 接口（扩展自 BeanFactory）通常被更广泛地使用  什么是Bean：Bean 代指的就是那些被 IoC 容器所管理的对象BeanDefinition 就是我们所说的 Spring 的 Bean，我们自己定义的各个 Bean 其实会转换成一个个 BeanDefinition 存在于 Spring 的 BeanFactory 中。 Bean以实例为单位被IOC容器管理，且多为单例，所以尽量设计为无状态（避免可变成员变量） SpringBoot快速启动？？？？1.	自动配置EnableAutoConfigurationImportSelector类使用Spring Boot的条件注解API来选择和应用自动配置类。这个选择器会查看META-INF&#x2F;spring.factor...</div></div></div></a><a class="pagination-related" href="/2024/03/17/Study-Diary-3-17/" title="Study Diary 3.17"><img class="cover" src="https://pic.imgdb.cn/item/65e59f439f345e8d033461cf.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-17</div><div class="info-item-2">Study Diary 3.17</div></div><div class="info-2"><div class="info-item-1">学习日记DAY 12学习情况早上看了几篇part2&amp;3，下午回顾了几道链表的入门题，有点记得住了晚上和外教SchurFroggy AKA Andy Zhu 练习两次完整的口语深刻意识到自己①讲的太少②断断续续考试在即，重点问题须立马解决！！ 心情夜晚易醒，判断为肝火旺 tired，man。。龙珠连招愈发熟练（ </div></div></div></a><a class="pagination-related" href="/2024/03/15/Study-Diary-3-15/" title="Study Diary 3.15"><img class="cover" src="https://pic.imgdb.cn/item/65e59f439f345e8d033461cf.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-15</div><div class="info-item-2">Study Diary 3.15</div></div><div class="info-2"><div class="info-item-1">学习日记DAY 10学习情况早上学了一下大作文，然后写了一篇(30min, feel better now).开始练习口语part2&amp;3! 今晚让舍友当雅思考官也练了几次哈哈哈哈，有点好玩 写了几道算法题，水一下吧①lc451. 根据字符出现频率排序:给定一个字符串 s ，根据字符出现的 频率 对其进行 降序排序 。一个字符出现的 频率 是它出现在字符串中的次数。 1234567891011121314151617181920212223class Solution &#123;    public String frequencySort(String s) &#123;       Map&lt;Character,Integer&gt; map=new HashMap&lt;&gt;();       for(int i=0;i&lt;s.length();i++)&#123;        map.put(s.charAt(i),map.getOrDefault(s.charAt(i),0)+1);       &#125;       List&lt;Chara...</div></div></div></a><a class="pagination-related" href="/2024/03/07/Study-Diary-3-07/" title="Study Diary 3.07"><img class="cover" src="https://pic.imgdb.cn/item/65e59f439f345e8d033461cf.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-07</div><div class="info-item-2">Study Diary 3.07</div></div><div class="info-2"><div class="info-item-1">学习日记DAY 4学习情况早上学习了Mysql 性能分析的部分，牢固了一下对索引的认识。主键索引是InnoDB默认有的，没主键则找UNIQUE字段，没有则建立隐藏rowid唯一索引： 避免（建立了唯一索引的）列值出现重复默认主键索引就是聚集索引，其他建立的索引是二级索引。性能分析： show status执行频次  慢启动日志（记录慢于设置时间的SQL） |show profiles（查看每条SQL耗时情况）|EXPLAIN查看执行计划主键顺序插入为什么比乱序插入性能更好？   A：InnoDB每个页的大小是固定的，乱序插入会更容易发生页分裂，浪费性能最左前缀法则，什么时候索引会失效？ 复习了Redis！ 基本数据结构底层实现 心情下午面试了srp，稳稳通过了，也是这学期第一个正反馈吧。打算把项目吃透再多投点，而且雅思不能丢掉呀…晚上和朋友吃了饭，很久没聚的朋友再见面还是比较开心的明天看周处除三害！ </div></div></div></a><a class="pagination-related" href="/2024/09/03/9-2-%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/" title="9.2 学习日记"><img class="cover" src="https://pic.imgdb.cn/item/66d848e1d9c307b7e92d172a.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-03</div><div class="info-item-2">9.2 学习日记</div></div><div class="info-2"><div class="info-item-1">学习情况https://www.nowcoder.com/discuss/658742491918659584?sourceSSR=users Linux文件描述符: Java锁机制：主要包括synchronized关键字、Lock接口及其实现类（如ReentrantLock）、原子类（如AtomicInteger）、volatile关键字等。可重入锁:可重入锁（Reentrant Lock）是一种特殊类型的锁，它允许同一个线程多次获得同一把锁。这种锁的主要优点是避免了因递归调用或函数间调用而导致的死锁问题。 这是通过为每个锁关联一个获取计数和一个所有者线程来实现的。当锁是空闲的，计数为0。当线程首次获得锁时，计数变为1，此线程成为该锁的所有者。如果同一线程再次获得该锁，计数将增加。每次成功获取锁后，计数都会增加，每次释放锁后，计数都会减少。当计数回到0时，锁变为空闲状态。Java的synchronized关键字也支持锁的可重入。当一个线程已经持有某个对象的锁时，它可以再次进入由该锁保护的其他synchronized方法或代码块，而不会发生死锁。 123456789101112p...</div></div></div></a><a class="pagination-related" href="/2024/03/10/Study-Diary-3-10/" title="Study Diary 3.10"><img class="cover" src="https://pic.imgdb.cn/item/65e59f439f345e8d033461cf.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-10</div><div class="info-item-2">Study Diary 3.10</div></div><div class="info-2"><div class="info-item-1">学习日记DAY 6学习情况早上过了一遍Spring Cloud，感觉不会问太多  看了下Spring AOP。。。还是很抽象，只知道是动态代理的方法把重复的非业务代码织入要运行的过程中。下午写了两篇大作文，20分钟写完一篇。。。感觉有点问题，可能得复习一下语法啥的？？？ 规划：今明两天把两个项目都过好，然后好好复习基础八股（如HashMap里的负载因子等   看看MQ。 心情效率一高的话，感觉时间还是蛮充足的！其实蛮想休息，但是状态就像上了发条，只会越走越快周二晚面完二面，然后gap几天只看看英语吧！！听说二班有人WXG已经hr面完在等oc了，真是羡慕，也希望自己如愿Wish Me Good Luck </div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Jackvideo</div><div class="author-info-description">Give your life a warm hug</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://space.bilibili.com/3288519"><i class="fab fa-bilibili"></i><span>订阅我</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Jackvideo" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="https://space.bilibili.com/3288519" target="_blank" title="Bilibili"><i class="fab fa-bilibili" style="color: #FF99FF;"></i></a><a class="social-icon" href="https://music.163.com/#/artist?id=32784641" target="_blank" title="网易云音乐"><i class="fab fa-spotify" style="color: #9b201c;"></i></a><a class="social-icon" href="mailto:13226110808@163.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E6%83%85%E5%86%B5"><span class="toc-number">1.</span> <span class="toc-text">学习情况</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RAG-%E4%B8%8D%E6%98%AF%E7%AE%80%E5%8D%95%E7%9A%84%E5%90%91%E9%87%8F%E5%BA%93%E9%97%AE%E7%AD%94"><span class="toc-number">2.</span> <span class="toc-text">RAG 不是简单的向量库问答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%81%E4%B8%9A%E7%BA%A7-RAG-%E7%9A%84%E6%9E%B6%E6%9E%84%E5%88%86%E5%B1%82"><span class="toc-number">3.</span> <span class="toc-text">企业级 RAG 的架构分层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Chunking%EF%BC%9A%E6%9E%84%E9%80%A0%E5%8F%AF%E6%A3%80%E7%B4%A2%E7%9A%84%E7%9F%A5%E8%AF%86%E5%8D%95%E5%85%83"><span class="toc-number">4.</span> <span class="toc-text">Chunking：构造可检索的知识单元</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Embedding-%E4%B8%8E-Vector-Search"><span class="toc-number">5.</span> <span class="toc-text">Embedding 与 Vector Search</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hybrid-Search%EF%BC%9A%E8%AF%AD%E4%B9%89%E5%8F%AC%E5%9B%9E-%E7%B2%BE%E7%A1%AE%E5%8C%B9%E9%85%8D"><span class="toc-number">6.</span> <span class="toc-text">Hybrid Search：语义召回 + 精确匹配</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BM25-%E4%B8%8E-RRF"><span class="toc-number">7.</span> <span class="toc-text">BM25 与 RRF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93"><span class="toc-number">8.</span> <span class="toc-text">阶段性总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/26/7-25-7-26-%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/" title="7.25-7.26 学习日记">7.25-7.26 学习日记</a><time datetime="2026-07-26T15:59:00.000Z" title="发表于 2026-07-26 23:59:00">2026-07-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/13/7-13-%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/" title="7.13 学习日记">7.13 学习日记</a><time datetime="2026-07-13T15:59:00.000Z" title="发表于 2026-07-13 23:59:00">2026-07-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/08/7-8-%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/" title="7.8 学习日记">7.8 学习日记</a><time datetime="2026-07-08T15:59:00.000Z" title="发表于 2026-07-08 23:59:00">2026-07-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/05/7-5-%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/" title="7.5 学习日记">7.5 学习日记</a><time datetime="2026-07-05T15:59:00.000Z" title="发表于 2026-07-05 23:59:00">2026-07-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/03/17/%E6%8F%90%E5%89%8D%E5%AE%9E%E4%B9%A0%E7%AC%AC%E4%B8%80%E5%A4%A9/" title="提前实习第一天"><img src="https://tse2-mm.cn.bing.net/th/id/OIP-C.g_OIpfyz-cYOcDvLBC7S6AHaE5?w=281&amp;h=186&amp;c=7&amp;r=0&amp;o=5&amp;dpr=1.3&amp;pid=1.7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="提前实习第一天"/></a><div class="content"><a class="title" href="/2025/03/17/%E6%8F%90%E5%89%8D%E5%AE%9E%E4%B9%A0%E7%AC%AC%E4%B8%80%E5%A4%A9/" title="提前实习第一天">提前实习第一天</a><time datetime="2025-03-17T14:22:30.000Z" title="发表于 2025-03-17 22:22:30">2025-03-17</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2020 - 2026 By Jackvideo</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.5"></script><script src="/js/main.js?v=5.5.5"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: '',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(res => {
+      countELement.textContent = res[0].count
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  const init = (el = document, path = location.pathname) => {
+    twikoo.init({
+      el: el.querySelector('#twikoo-wrap'),
+      envId: '',
+      region: '',
+      onCommentLoaded: () => {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      },
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    
+
+    isShuoshuo && (window.shuoshuoComment.destroyTwikoo = () => {
+      if (el.children.length) {
+        el.innerHTML = ''
+        el.classList.add('no-comment')
+      }
+    })
+  }
+
+  const loadTwikoo = (el, path) => {
+    if (typeof twikoo === 'object') setTimeout(() => init(el, path), 0)
+    else btf.getScript('https://cdn.jsdelivr.net/npm/twikoo@1.7.11/dist/twikoo.all.min.js').then(() => init(el, path))
+  }
+
+  if (isShuoshuo) {
+    'Twikoo' === 'Twikoo'
+      ? window.shuoshuoComment = { loadComment: loadTwikoo }
+      : window.loadOtherComment = loadTwikoo
+    return
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = loadTwikoo
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
